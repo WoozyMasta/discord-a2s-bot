@@ -1,0 +1,73 @@
+# This configuration uses YAML anchors (&tpl) to define a base template
+# which is then merged into each server configuration using the merge key (<<: *tpl).
+# To validate the configuration, you can use the command:
+# yq 'explode(.) | del(.base-template) | ... comments=""' config.yaml
+
+---
+# Bot configuration settings
+bot:
+  token: # Discord bot token
+  update_interval: 30s # Interval for status updates
+  concurrency: 10 # Number of concurrent servers updates
+
+# Base template using YAML anchor &tpl
+# Defines common settings for servers to avoid duplication
+base-template: &tpl
+  host: 127.0.0.1 # Server host address
+  timeout: 3 # Timeout for server queries in seconds
+  buffer_size: 1024 # Buffer size for server responses
+
+  # Template for Discord channel name
+  channel_name: |
+    {{ if .Info -}}
+    {{ if eq .Info.ID 221100 }}{{ if .Extra.Time }}{{ DurationEmoji .Extra.Time }}{{ end }}{{ else }}🟢{{ end -}}
+    -{{ .Info.Players }}∶{{ .Info.MaxPlayers }}-{{- .ID -}}
+    {{ else -}}
+    🔴-{{- .ID -}}
+    {{ end -}}
+
+  # Template for Discord channel description
+  channel_description: |
+    {{ if .Info -}}
+    🟢 {{ .Info.Name }}
+    📜 {{ .Info.Game }}
+    {{ if eq .Info.ID 107410 }}{{ if .Extra.GameType -}}
+    🎯 {{ .Extra.GameType }}
+    {{ end }}{{ end -}}
+    👥 {{ .Info.Players }}/{{ .Info.MaxPlayers }}{{ if eq .Info.ID 221100 }}{{ if .Extra.PlayersQueue }} ({{ .Extra.PlayersQueue }}){{ end }}{{ end }}
+    🌍 {{ .Info.Map }}
+    📡 {{ .Host }}:{{ .Info.Port }}
+    ⚙️ {{ .Info.Environment }} {{ AppID .Info.ID }} {{ .Info.Version }} server
+    {{ else -}}
+    🔴 Server {{ .ID }} offline
+    📡 {{ .Host }}:{{ .Port }}"
+    {{ end -}}
+
+  # Template for Discord category name
+  category_name: "{{ .Info.Name }}{{ if .Info }}🟢{{ else }}🔴{{ end }}"
+
+# List of server configurations
+servers:
+  - id: My Cherno Server # Server identifier
+    port: 27016 # Server port
+    channel_id: 1234567898765432123 # Discord channel ID to update
+    category_id: 9876543212345678987 # Discord category ID to update
+    <<: *tpl # Merge with base-template
+
+  - id: My Livonia Server
+    port: 27017
+    channel_id: 2234567898765432123
+    category_id: 8876543212345678987
+    <<: *tpl
+
+  - id: My Sakhal Server
+    port: 27018
+    channel_id: 3234567898765432123
+    category_id: 7876543212345678987
+    <<: *tpl
+
+# Logging configuration settings
+logging:
+  level: info # Log level (debug, info, warn, error, etc.)
+  format: text # Log format (text or json)
+  output: stdout # Log output destination (stdout, stderr, or file path)

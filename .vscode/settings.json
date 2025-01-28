@@ -1,0 +1,33 @@
+{
+  "go.lintTool": "golangci-lint",
+  "go.lintFlags": [
+    "--fast"
+  ],
+  "go.testEnvFile": "${workspaceFolder}/dev.env",
+  "cSpell.words": [
+    "Arma",
+    "BattlEye",
+    "bercon",
+    "buildvcs",
+    "cyclonedx",
+    "dayz",
+    "Debugf",
+    "Errorf",
+    "Fatalf",
+    "GOARCH",
+    "GOFLAGS",
+    "gomod",
+    "GOOS",
+    "Infof",
+    "ldflags",
+    "loglevel",
+    "Tracef",
+    "trimpath",
+    "Warnf",
+    "winres",
+    "woozymasta"
+  ],
+  "cSpell.ignorePaths": [
+    "go.mod", "go.sum", ".github/actions/**/*.yaml", ".github/workflows/**/*.yaml", ".vscode/*"
+  ]
+}
