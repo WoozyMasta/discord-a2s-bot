@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning][].
 [0.1.1]: https://github.com/WoozyMasta/discord-a2s-bot/compare/v0.1.0...v0.1.1
 -->
 
-## [0.1.0][] - 2025-01-28
+## [0.1.0][] - 2025-01-29
 
 ### Added
 

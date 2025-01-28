@@ -48,7 +48,7 @@ on server statuses.
     * [Systemd service](#systemd-service)
     * [Windows service](#windows-service)
 * [Other](#other)
-* [YAML anchors merging](#yaml-anchors-merging)
+  * [YAML anchors merging](#yaml-anchors-merging)
 * [Support me ☕](#support-me-)
 
 ## Installation
@@ -480,7 +480,7 @@ you. If you want to collect detailed statistics about your server, take a
 look at this [discord-a2s-bot] project for DayZ, I think you can find something
 similar for your game.
 
-## YAML anchors merging
+### YAML anchors merging
 
 In order to avoid complex configuration and provide flexibility of
 configuration, where each server can have its own personal template, the
