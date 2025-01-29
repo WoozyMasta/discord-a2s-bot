@@ -150,8 +150,9 @@ convenient for you, json will also be accepted by the program.
 ## Templating
 
 In the detailed example you can see something like this template for
- the channel name:
+the channel name:
 
+<!--{% raw % } start fix jekyll -->
 ```go
 {{ if .Info -}}
 {{ if eq .Info.ID 221100 }}{{ if .Extra.Time }}{{ DurationEmoji .Extra.Time }}{{ end }}{{ else }}🟢{{ end -}}
@@ -160,6 +161,7 @@ In the detailed example you can see something like this template for
 🔴-{{- .ID -}}
 {{ end -}}
 ```
+<!--{% endraw % } stop fix jekyll-->
 
 This is a standard go mechanism that implements data-driven templates for
 generating text output.
