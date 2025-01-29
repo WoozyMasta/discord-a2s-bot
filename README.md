@@ -1,6 +1,3 @@
----
-render_with_liquid: false
----
 <!-- omit in toc -->
 # Discord A2S Game Server Monitor Bot
 
