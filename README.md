@@ -406,7 +406,7 @@ configuration. This ensures the exporter runs on system startup.
 ```ini
 [Unit]
 Description=Discord A2S Bot
-Documentation=https://woozymasta.github.io/discord-a2s-bot/
+Documentation=https://github.com/WoozyMasta/discord-a2s-bot
 Wants=network-online.target
 After=network-online.target dayz-server.target
 
@@ -513,6 +513,10 @@ Thank you!
 <!-- cSpell:enable -->
 
 Your support is greatly appreciated!
+
+---
+
+[Discord](https://woozymasta.ru/discord)
 
 <!-- Links -->
 [logo]: assets/discord-a2s.png
