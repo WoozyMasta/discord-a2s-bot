@@ -1,27 +1,10 @@
+version: "2"
 run:
   tests: false
-
-issues:
-  include:
-    - EXC0001
-    - EXC0005
-    - EXC0011
-    - EXC0012
-    - EXC0013
-  max-issues-per-linter: 0
-  max-same-issues: 0
-
-linters-settings:
-  dupl:
-    threshold: 100
-  lll:
-    line-length: 140
-
 linters:
   enable:
     - bodyclose
     - dupl
-    - goimports
     - gosec
     - nilerr
     - predeclared
@@ -32,3 +15,28 @@ linters:
     - unconvert
     - unparam
     - whitespace
+  settings:
+    dupl:
+      threshold: 100
+    lll:
+      line-length: 140
+  exclusions:
+    generated: lax
+    presets:
+      - common-false-positives
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
+formatters:
+  enable:
+    - goimports
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
