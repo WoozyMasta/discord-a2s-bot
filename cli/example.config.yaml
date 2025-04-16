@@ -44,7 +44,7 @@ base-template: &tpl
     {{ end -}}
 
   # Template for Discord category name
-  category_name: "{{ .Info.Name }}{{ if .Info }}🟢{{ else }}🔴{{ end }}"
+  category_name: "{{ if .Info }}{{ .Info.Name }} 🟢{{ else }}{{ .ID }} 🔴{{ end }}"
 
 # List of server configurations
 servers:
