@@ -5,9 +5,9 @@ package vars
 var (
 	// Version of application (git tag)
 	Version string
-	// Current git commit
+	// Commit current in git
 	Commit string
-	// Time of start build app
+	// BuildTime of start build app
 	BuildTime string
 	// URL to repository
 	URL string

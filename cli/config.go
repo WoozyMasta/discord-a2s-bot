@@ -98,6 +98,9 @@ It returns a uint32 hash value.
 */
 func generateHash(s string) uint32 {
 	hasher := fnv.New32a()
-	hasher.Write([]byte(s))
+	if _, err := hasher.Write([]byte(s)); err != nil {
+		return 0
+	}
+
 	return hasher.Sum32()
 }

@@ -44,7 +44,7 @@ func (l *Logging) setup() {
 	case "stderr", "err", "2":
 		writer = os.Stderr
 	default:
-		file, err := os.OpenFile(l.Output, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		file, err := os.OpenFile(l.Output, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0600)
 		if err != nil {
 			log.Fatal().Err(err).Str("output", l.Output).Msg("Failed to open log file")
 		}
