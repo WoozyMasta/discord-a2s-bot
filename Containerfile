@@ -8,7 +8,7 @@ ARG UPX_VERSION=4.2.4
 # hadolint ignore=DL3008
 RUN set -xeu; \
     apt-get update; \
-    apt-get install -y --no-install-recommends xz-utils curl; \
+    apt-get install -y --no-install-recommends xz-utils curl ca-certificates; \
     curl -#Lo upx.tar.xz \
         "https://github.com/upx/upx/releases/download/v$UPX_VERSION/upx-$UPX_VERSION-${ARCH}_linux.tar.xz"; \
     tar -xvf upx.tar.xz --strip-components=1 "upx-$UPX_VERSION-${ARCH}_linux/upx"; \
@@ -41,5 +41,6 @@ RUN set -eux;\
     upx -t ./discord-a2s-bot
 
 FROM scratch
+COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=build /src/discord-a2s-bot/discord-a2s-bot /discord-a2s-bot
 ENTRYPOINT ["/discord-a2s-bot"]
