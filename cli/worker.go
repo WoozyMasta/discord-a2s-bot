@@ -111,6 +111,17 @@ func editChannel(ctx context.Context, ds *discordgo.Session, id, name, descripti
 	}
 
 	_, err := ds.ChannelEdit(id, ce)
+	respErr, ok := err.(*discordgo.RESTError)
+	if ok && respErr.Response != nil && respErr.Response.StatusCode == 429 {
+		headers := respErr.Response.Header
+
+		log.Warn().
+			Str("channel", id).
+			Str("retry_after", headers.Get("Retry-After")).
+			Str("limit", headers.Get("X-RateLimit-Limit")).
+			Str("remaining", headers.Get("X-RateLimit-Remaining")).
+			Msg("Discord 429 rate limit hit")
+	}
 
 	select {
 	case <-ctx.Done():
