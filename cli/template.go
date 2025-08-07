@@ -232,11 +232,11 @@ func tplHelperRoundUpTo(val any, step int64) int64 {
 	return ((v / step) + 1) * step
 }
 
-// tplHelperClamp clamp confines value to [min, max].
-func tplHelperClamp(val, min, max any) int64 {
+// tplHelperClamp clamp confines value to [minVal, maxVal].
+func tplHelperClamp(val, minVal, maxVal any) int64 {
 	v := toInt64(val)
-	lo := toInt64(min)
-	hi := toInt64(max)
+	lo := toInt64(minVal)
+	hi := toInt64(maxVal)
 	if v < lo {
 		return lo
 	}
