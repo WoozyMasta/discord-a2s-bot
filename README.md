@@ -306,6 +306,27 @@ Need pass two value, current value and limit, 0 its start point.
 // for example for its broken values it will return the 🚫
 ```
 
+<!-- omit in toc -->
+#### `RoundDown`, `RoundUp` and `Clamp`
+
+Utility functions to avoid changing channel names on every small value change.
+
+* `RoundDown` — Rounds `value` **down** to the nearest multiple of `step`.
+* `RoundUp` — Rounds `value` **up** to the nearest multiple of `step`.
+* `Clamp` — Limits `value` to a range between `min` and `max`.
+
+```go
+{{ RoundUp .Info.Players 5 }}/{{ .Info.MaxPlayers }} players
+// Players: 31 -> "35/60", 36 -> "40/60"
+{{ RoundDown .Info.Players 10 }}/{{ .Info.MaxPlayers }}
+// Players: 9 -> "0/60", 17 -> "10/60", 29 -> "20/60"
+{{ Clamp .Info.Players 0 .Info.MaxPlayers }}/{{ .Info.MaxPlayers }} online
+// Players: -4 -> "0/60", 87 -> "60/60" (if max = 60)
+```
+
+Using these helpers reduces the amount of PATCH requests, helping you stay
+under [Discord Rate Limits][].
+
 ### Example template for learning
 
 Now that you have read this, it will not be difficult for you to read and
@@ -542,3 +563,4 @@ Your support is greatly appreciated!
 
 [A2S]: https://developer.valvesoftware.com/wiki/Server_queries
 [yq]: https://github.com/mikefarah/yq/releases/latest
+[Discord Rate Limits]: https://discord.com/developers/docs/topics/rate-limits

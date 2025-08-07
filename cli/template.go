@@ -43,6 +43,9 @@ func (t *TemplateData) render(tplStr string) (string, error) {
 		"CountryEmoji":    tplHelperCountryEmoji,
 		"CodeEmoji":       tplHelperCodeEmoji,
 		"ValueColorEmoji": tplHelperValueColorEmoji,
+		"RoundDown":       tplHelperRoundDownTo,
+		"RoundUp":         tplHelperRoundUpTo,
+		"Clamp":           tplHelperClamp,
 	}
 
 	tmpl, err := template.New("template").Funcs(funcMap).Parse(tplStr)
@@ -203,6 +206,46 @@ func tplHelperValueColorEmoji(from, to any) string {
 	default:
 		return "🔴" // Crit
 	}
+}
+
+// tplHelperRoundDownTo returns the largest multiple of step ≤ value.
+func tplHelperRoundDownTo(val any, step int64) int64 {
+	v := toInt64(val)
+	if step <= 0 {
+		return v
+	}
+
+	return (v / step) * step
+}
+
+// tplHelperRoundUpTo returns the smallest multiple of step ≥ value.
+func tplHelperRoundUpTo(val any, step int64) int64 {
+	v := toInt64(val)
+	if step <= 0 {
+		return v
+	}
+
+	if v%step == 0 {
+		return v
+	}
+
+	return ((v / step) + 1) * step
+}
+
+// tplHelperClamp clamp confines value to [min, max].
+func tplHelperClamp(val, min, max any) int64 {
+	v := toInt64(val)
+	lo := toInt64(min)
+	hi := toInt64(max)
+	if v < lo {
+		return lo
+	}
+
+	if v > hi {
+		return hi
+	}
+
+	return v
 }
 
 // force parse numbers and strings to int or return 0 otherwise
