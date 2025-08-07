@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"hash/fnv"
 	"os"
 	"time"
 
@@ -48,8 +47,8 @@ type ServerConfig struct {
 
 	// Fields to store the previous state hashes for channels and categories
 
-	prevChannelHash  uint32 // Previous hash for the channel
-	prevCategoryHash uint32 // Previous hash for the category
+	prevChannelHash  uint64 // Previous hash for the channel
+	prevCategoryHash uint64 // Previous hash for the category
 
 	// Configuration data again (aligned)
 
@@ -89,18 +88,4 @@ func readConfig() (*Config, error) {
 	cfg.Logging.setup()
 
 	return &cfg, nil
-}
-
-/*
-generateHash generates an FNV-1a hash for the given string.
-
-It returns a uint32 hash value.
-*/
-func generateHash(s string) uint32 {
-	hasher := fnv.New32a()
-	if _, err := hasher.Write([]byte(s)); err != nil {
-		return 0
-	}
-
-	return hasher.Sum32()
 }

@@ -7,6 +7,7 @@ import (
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/rs/zerolog/log"
+	"github.com/zeebo/xxh3"
 )
 
 // updateChannel attempts to render the channel's template, compare hash, edit if needed
@@ -42,7 +43,7 @@ func (s *ServerConfig) updateChannel(ctx context.Context, ds *discordgo.Session,
 	}
 
 	// Compare hashes
-	newHash := generateHash(name + description)
+	newHash := xxh3.HashString(name + description)
 	if newHash == s.prevChannelHash {
 		log.Debug().Str("channel", s.ChannelID).Msg("Skipping update for channel without changes detected")
 		return nil
@@ -50,8 +51,8 @@ func (s *ServerConfig) updateChannel(ctx context.Context, ds *discordgo.Session,
 
 	log.Debug().
 		Str("channel", s.ChannelID).
-		Uint32("new hash", newHash).
-		Uint32("prev hash", s.prevChannelHash).
+		Uint64("new hash", newHash).
+		Uint64("prev hash", s.prevChannelHash).
 		Msgf("Updating channel")
 
 	// Actual edit (context-based)
@@ -77,7 +78,7 @@ func (s *ServerConfig) updateCategory(ctx context.Context, ds *discordgo.Session
 		name = ""
 	}
 
-	newHash := generateHash(name)
+	newHash := xxh3.HashString(name)
 	if newHash == s.prevCategoryHash {
 		log.Debug().Str("channel", s.CategoryID).Msg("Skipping update for category without changes detected")
 		return nil
@@ -85,8 +86,8 @@ func (s *ServerConfig) updateCategory(ctx context.Context, ds *discordgo.Session
 
 	log.Debug().
 		Str("category", s.ChannelID).
-		Uint32("new hash", newHash).
-		Uint32("prev hash", s.prevCategoryHash).
+		Uint64("new hash", newHash).
+		Uint64("prev hash", s.prevCategoryHash).
 		Msgf("Updating category")
 
 	err = editChannel(ctx, ds, s.CategoryID, name, "")
